@@ -1,0 +1,21 @@
+#!/bin/bash
+POKEMON_LIST_FILE='../data/1stgen'
+readarray POKEMON_LIST < $POKEMON_LIST_FILE
+cd '../data/images'
+if [ $? -eq 0 ]; then
+    echo 'Entered ../data/images/'
+else
+    echo 'Folder ../data/images/ does not exist. Creating it...'
+    mkdir '../data/images'
+    cd '../data/images'
+    echo 'Created folder ../data/images/. Entering...'
+fi
+
+echo 'Downloading '${#POKEMON_LIST[@]}' images...'
+for i in ${POKEMON_LIST[@]}
+do
+  wget http://img.pokemondb.net/sprites/firered-leafgreen/normal/${i,,}.png -q
+done
+echo 'Downloaded ' $(ls | wc -l) ' files.'
+cd '../../scripts'
+echo 'Returning to scripts folder...'
